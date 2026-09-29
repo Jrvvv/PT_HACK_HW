@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>HALK Encoder</title>
+  <style>
+    :root {
+      --bg0: #0c1210;
+      --bg1: #14201a;
+      --ink: #e8f5ec;
+      --muted: #8aa394;
+      --accent: #b8ff3c;
+      --accent-dim: #6a9a22;
+      --hot: #ff5a36;
+      --ring: rgba(184, 255, 60, 0.28);
+      --panel: rgba(20, 36, 28, 0.72);
+      --display: "Gill Sans", "Trebuchet MS", "Century Gothic", sans-serif;
+      --mono: "Cascadia Mono", "Consolas", "Menlo", monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100%;
+      color: var(--ink);
+      font-family: var(--mono);
+      background:
+        radial-gradient(1200px 700px at 15% -10%, #1d3a28 0%, transparent 55%),
+        radial-gradient(900px 600px at 100% 20%, #2a1a12 0%, transparent 50%),
+        linear-gradient(165deg, var(--bg0), var(--bg1) 55%, #0a0f0d);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(232, 245, 236, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(232, 245, 236, 0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(circle at 50% 40%, black 20%, transparent 75%);
+      opacity: 0.55;
+    }
+
+    .stage {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: 28px 20px 40px;
+    }
+
+    .shell {
+      width: min(520px, 100%);
+      display: grid;
+      gap: 20px;
+      justify-items: center;
+      animation: rise 700ms cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .brand { text-align: center; letter-spacing: 0.18em; }
+    .brand h1 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(2.6rem, 10vw, 4.2rem);
+      line-height: 0.92;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #f4ffe8 10%, var(--accent) 70%, var(--accent-dim));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .brand p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .digit-hero {
+      font-family: var(--display);
+      font-size: clamp(4rem, 18vw, 6.5rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      text-shadow: 0 0 40px rgba(184, 255, 60, 0.25);
+      transition: transform 120ms ease, color 120ms ease;
+    }
+    .digit-hero.reset-flash {
+      color: var(--hot);
+      transform: scale(1.08);
+    }
+
+    .leds {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      width: min(420px, 100%);
+    }
+    @media (min-width: 420px) {
+      .leds { grid-template-columns: repeat(10, 1fr); }
+    }
+    .led {
+      aspect-ratio: 1;
+      border-radius: 10px;
+      border: 1px solid rgba(184, 255, 60, 0.22);
+      background: rgba(12, 20, 16, 0.9);
+      color: var(--ink);
+      font-family: var(--display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: background 120ms ease, color 120ms ease, box-shadow 120ms ease, border-color 120ms ease, transform 90ms ease;
+    }
+    .led:hover:not(:disabled) {
+      border-color: rgba(184, 255, 60, 0.55);
+      box-shadow: 0 0 16px rgba(184, 255, 60, 0.2);
+    }
+    .led:active:not(:disabled) {
+      transform: scale(0.94);
+    }
+    .led.on {
+      background: linear-gradient(180deg, #d8ff6a, var(--accent-dim));
+      color: #10180f;
+      border-color: rgba(184, 255, 60, 0.55);
+      box-shadow: 0 0 18px rgba(184, 255, 60, 0.35);
+    }
+    .led:disabled {
+      opacity: 0.45;
+      cursor: wait;
+    }
+
+    .knob-wrap {
+      position: relative;
+      width: min(300px, 78vw);
+      aspect-ratio: 1;
+      touch-action: none;
+      user-select: none;
+      filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.45));
+    }
+
+    .knob {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 28%, #3a4f42 0%, #1a2620 42%, #0d1411 78%);
+      border: 1px solid rgba(184, 255, 60, 0.22);
+      box-shadow:
+        inset 0 0 0 10px rgba(8, 12, 10, 0.55),
+        0 0 0 1px rgba(0, 0, 0, 0.4);
+      transition: box-shadow 120ms ease;
+    }
+    .knob.spinning { box-shadow: inset 0 0 0 10px rgba(8, 12, 10, 0.55), 0 0 36px var(--ring); }
+
+    .ticks {
+      position: absolute;
+      inset: 16px;
+      border-radius: 50%;
+      background: repeating-conic-gradient(
+        from -18deg,
+        rgba(232, 245, 236, 0.7) 0deg 2deg,
+        transparent 2deg 36deg
+      );
+      -webkit-mask: radial-gradient(circle, transparent 62%, #000 63% 78%, transparent 79%);
+      mask: radial-gradient(circle, transparent 62%, #000 63% 78%, transparent 79%);
+      pointer-events: none;
+      opacity: 0.65;
+    }
+
+    .pointer {
+      position: absolute;
+      left: 50%;
+      top: 12%;
+      width: 4px;
+      height: 18%;
+      margin-left: -2px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--accent), transparent);
+      box-shadow: 0 0 12px rgba(184, 255, 60, 0.55);
+      transform-origin: 50% 210%;
+      pointer-events: none;
+      transition: transform 100ms linear;
+    }
+
+    .hub {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 34%;
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      color: var(--ink);
+      font: inherit;
+      background: radial-gradient(circle at 40% 30%, #2d4035, #121a16 70%);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 0 0 3px rgba(184, 255, 60, 0.12),
+        0 10px 20px rgba(0, 0, 0, 0.35);
+      transition: transform 90ms ease, background 90ms ease, box-shadow 90ms ease;
+      z-index: 2;
+    }
+    .hub:active, .hub.down {
+      transform: translate(-50%, -50%) scale(0.92);
+      background: radial-gradient(circle at 40% 30%, #4a2a20, #1a100e 70%);
+      box-shadow:
+        inset 0 4px 10px rgba(0, 0, 0, 0.45),
+        0 0 0 3px rgba(255, 90, 54, 0.35),
+        0 0 28px rgba(255, 90, 54, 0.35);
+    }
+    .hub span {
+      display: block;
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    .readout {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+    .meter {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: var(--panel);
+      border: 1px solid rgba(184, 255, 60, 0.14);
+      backdrop-filter: blur(8px);
+    }
+    .meter label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .meter strong {
+      font-family: var(--display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .meter.hot strong { color: var(--hot); }
+
+    .panel {
+      width: 100%;
+      display: grid;
+      gap: 14px;
+      padding: 16px;
+      border-radius: 18px;
+      background: var(--panel);
+      border: 1px solid rgba(184, 255, 60, 0.14);
+    }
+    .panel h2 {
+      font-family: var(--display);
+      font-size: 1rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: end;
+    }
+    .row3 {
+      display: grid;
+      grid-template-columns: 1.4fr 0.8fr auto;
+      gap: 10px;
+      align-items: end;
+    }
+    .field label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .field input {
+      width: 100%;
+      border: 1px solid rgba(184, 255, 60, 0.22);
+      background: rgba(8, 14, 11, 0.85);
+      color: var(--ink);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font: inherit;
+      font-size: 1.05rem;
+      letter-spacing: 0.15em;
+    }
+    .field input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(184, 255, 60, 0.12);
+    }
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font: inherit;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      color: #10180f;
+      background: linear-gradient(180deg, #d8ff6a, var(--accent-dim));
+      white-space: nowrap;
+    }
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+    .btn.ghost {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid rgba(184, 255, 60, 0.35);
+    }
+    .run-status {
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      min-height: 1.2em;
+    }
+    .run-status.busy { color: var(--accent); }
+
+    .hint {
+      color: var(--muted);
+      font-size: 0.75rem;
+      text-align: center;
+      line-height: 1.5;
+      max-width: 40ch;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%; background: #666;
+    }
+    .dot.live {
+      background: var(--accent);
+      animation: pulse 1.6s ease-out infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(184, 255, 60, 0.45); }
+      70% { box-shadow: 0 0 0 10px rgba(184, 255, 60, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(184, 255, 60, 0); }
+    }
+
+    @media (max-width: 420px) {
+      .readout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <div class="shell">
+      <header class="brand">
+        <h1>HALK</h1>
+        <p>кнопки цифр · энкодер</p>
+      </header>
+
+      <div class="status"><span class="dot" id="dot"></span><span id="link">usb · connecting</span>
+        <a href="/probe.html" style="margin-left:12px;color:#b8ff3c;text-decoration:none;letter-spacing:.1em;font-size:.72rem;text-transform:uppercase">pico probe →</a>
+        <a href="/bruteforce.html" style="margin-left:12px;color:#ffb020;text-decoration:none;letter-spacing:.1em;font-size:.72rem;text-transform:uppercase">bruteforce →</a>
+      </div>
+
+      <div class="digit-hero" id="digitHero">0</div>
+
+      <div class="leds" id="leds" role="group" aria-label="Цифры энкодера 0–9"></div>
+
+      <div class="knob-wrap" id="wrap">
+        <div class="knob" id="knob">
+          <div class="ticks"></div>
+          <div class="pointer" id="pointer"></div>
+        </div>
+        <button class="hub" id="hub" type="button" aria-label="Press encoder"><span>push</span></button>
+      </div>
+
+      <section class="readout">
+        <div class="meter">
+          <label>digit</label>
+          <strong id="digitEl">0</strong>
+        </div>
+        <div class="meter">
+          <label>steps</label>
+          <strong id="pos">0</strong>
+        </div>
+        <div class="meter" id="btnMeter">
+          <label>button</label>
+          <strong id="btn">UP</strong>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Код · 4 цифры</h2>
+        <div class="row3">
+          <div class="field">
+            <label>код</label>
+            <input id="codeInput" type="text" inputmode="numeric" maxlength="8" placeholder="1234" value="" />
+          </div>
+          <div class="field">
+            <label>задержка, сек</label>
+            <input id="delayInput" type="number" min="0.05" step="0.05" value="0.5" />
+          </div>
+          <button class="btn" id="sendCodeBtn" type="button">Отправить код</button>
+        </div>
+        <div class="run-status" id="runStatus">idle</div>
+      </section>
+
+      <p class="hint">Кнопки 0–9: крутит энкодер от 0 до цифры шагами по 1 и жмёт Push. Код — четыре таких шага подряд. Прогресс на Pico: GP13→1-й … GP10→4-й.</p>
+    </div>
+  </main>
+
+  <script>
+    const knob = document.getElementById("knob");
+    const pointer = document.getElementById("pointer");
+    const hub = document.getElementById("hub");
+    const wrap = document.getElementById("wrap");
+    const posEl = document.getElementById("pos");
+    const digitEl = document.getElementById("digitEl");
+    const digitHero = document.getElementById("digitHero");
+    const btnEl = document.getElementById("btn");
+    const btnMeter = document.getElementById("btnMeter");
+    const dot = document.getElementById("dot");
+    const link = document.getElementById("link");
+    const leds = document.getElementById("leds");
+    const codeInput = document.getElementById("codeInput");
+    const delayInput = document.getElementById("delayInput");
+    const sendCodeBtn = document.getElementById("sendCodeBtn");
+    const runStatus = document.getElementById("runStatus");
+
+    for (let i = 0; i < 10; i++) {
+      const el = document.createElement("button");
+      el.type = "button";
+      el.className = "led";
+      el.textContent = String(i);
+      el.dataset.d = String(i);
+      el.setAttribute("aria-label", `Цифра ${i}`);
+      el.addEventListener("click", () => sendDigit(i));
+      leds.appendChild(el);
+    }
+
+    let position = 0;
+    let digit = 0;
+    let pressed = false;
+    let dragging = false;
+    let lastAngle = null;
+    let accum = 0;
+    let ignoreServerUntil = 0;
+    let holding = false;
+    let pressSeq = 0;
+    let seqBusy = false;
+
+    const DEG_PER_DIGIT = 36;
+
+    function normDigit(p) {
+      return ((p % 10) + 10) % 10;
+    }
+
+    function setSeqBusy(on, text) {
+      seqBusy = on;
+      sendCodeBtn.disabled = on;
+      leds.querySelectorAll(".led").forEach((el) => {
+        el.disabled = on;
+      });
+      runStatus.textContent = text || (on ? "busy" : "idle");
+      runStatus.classList.toggle("busy", on);
+    }
+
+    async function sendDigit(d) {
+      d = Number(d);
+      if (!Number.isFinite(d) || d < 0 || d > 9 || seqBusy) return;
+      setSeqBusy(true, `цифра ${d}…`);
+      try {
+        await postApi("/api/digit", { digit: d, delay: delayValue() });
+        setSeqBusy(false, `отправлено · ${d}`);
+      } catch (e) {
+        setSeqBusy(false, String(e.message || e));
+      }
+    }
+
+    function delayValue() {
+      const v = Number(delayInput.value);
+      return Number.isFinite(v) && v > 0 ? v : 0.5;
+    }
+
+    async function postApi(url, body) {
+      ignoreServerUntil = Date.now() + 800;
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "bad");
+      applyServer(data);
+      setLive(true);
+      return data;
+    }
+
+    sendCodeBtn.addEventListener("click", async () => {
+      const code = String(codeInput.value || "").replace(/\D/g, "");
+      if (code.length < 1) {
+        runStatus.textContent = "введи код";
+        return;
+      }
+      setSeqBusy(true, `отправка ${code}…`);
+      try {
+        const data = await postApi("/api/code", { code, delay: delayValue() });
+        setSeqBusy(false, data.status === "done" ? `готово · ${code}` : (data.status || "done"));
+      } catch (e) {
+        setSeqBusy(false, String(e.message || e));
+      }
+    });
+
+    codeInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") sendCodeBtn.click();
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")) return;
+      if (e.key >= "0" && e.key <= "9") {
+        e.preventDefault();
+        sendDigit(Number(e.key));
+      }
+    });
+
+    function render() {
+      digit = normDigit(position);
+      const deg = digit * DEG_PER_DIGIT;
+      pointer.style.transform = `rotate(${deg}deg)`;
+      posEl.textContent = String(position);
+      digitEl.textContent = String(digit);
+      digitHero.textContent = String(digit);
+      btnEl.textContent = pressed ? "DOWN" : "UP";
+      btnMeter.classList.toggle("hot", pressed);
+      hub.classList.toggle("down", pressed);
+      leds.querySelectorAll(".led").forEach((el) => {
+        el.classList.toggle("on", Number(el.dataset.d) === digit);
+      });
+    }
+
+    function flashReset() {
+      digitHero.classList.add("reset-flash");
+      setTimeout(() => digitHero.classList.remove("reset-flash"), 220);
+    }
+
+    function setLive(ok) {
+      dot.classList.toggle("live", ok);
+      link.textContent = ok ? "live · usb" : "usb · reconnecting";
+    }
+
+    function applyServer(data) {
+      if (typeof data.pos === "number") position = data.pos;
+      if (typeof data.digit === "number") digit = data.digit;
+      else digit = normDigit(position);
+      if (!holding) pressed = !!data.pressed;
+      if (typeof data.status === "string" && (data.busy || seqBusy)) {
+        runStatus.textContent = data.status;
+        runStatus.classList.toggle("busy", !!data.busy);
+      }
+      render();
+    }
+
+    async function post(body) {
+      ignoreServerUntil = Date.now() + 450;
+      const res = await fetch("/api/input", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) throw new Error("bad");
+      const data = await res.json();
+      applyServer(data);
+      setLive(true);
+      return data;
+    }
+
+    function angleFromEvent(e) {
+      const r = wrap.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const x = (e.clientX ?? e.touches[0].clientX) - cx;
+      const y = (e.clientY ?? e.touches[0].clientY) - cy;
+      return Math.atan2(y, x);
+    }
+
+    function onMove(e) {
+      if (!dragging || seqBusy) return;
+      const ang = angleFromEvent(e);
+      if (lastAngle == null) { lastAngle = ang; return; }
+      let d = ang - lastAngle;
+      if (d > Math.PI) d -= Math.PI * 2;
+      if (d < -Math.PI) d += Math.PI * 2;
+      lastAngle = ang;
+      accum += d * (180 / Math.PI);
+      while (accum >= DEG_PER_DIGIT) {
+        accum -= DEG_PER_DIGIT;
+        position += 1;
+        render();
+        post({ delta: 1 }).catch(() => setLive(false));
+      }
+      while (accum <= -DEG_PER_DIGIT) {
+        accum += DEG_PER_DIGIT;
+        position -= 1;
+        render();
+        post({ delta: -1 }).catch(() => setLive(false));
+      }
+      knob.classList.add("spinning");
+    }
+
+    function endDrag() {
+      dragging = false;
+      lastAngle = null;
+      accum = 0;
+      knob.classList.remove("spinning");
+    }
+
+    wrap.addEventListener("pointerdown", (e) => {
+      if (seqBusy) return;
+      if (e.target === hub || hub.contains(e.target)) return;
+      dragging = true;
+      lastAngle = angleFromEvent(e);
+      wrap.setPointerCapture(e.pointerId);
+    });
+    wrap.addEventListener("pointermove", onMove);
+    wrap.addEventListener("pointerup", endDrag);
+    wrap.addEventListener("pointercancel", endDrag);
+
+    wrap.addEventListener("wheel", (e) => {
+      if (seqBusy) return;
+      e.preventDefault();
+      const delta = e.deltaY > 0 ? 1 : -1;
+      position += delta;
+      render();
+      post({ delta }).catch(() => setLive(false));
+      knob.classList.add("spinning");
+      clearTimeout(wrap._spinT);
+      wrap._spinT = setTimeout(() => knob.classList.remove("spinning"), 180);
+    }, { passive: false });
+
+    function press(on) {
+      if (seqBusy) return;
+      pressed = on;
+      if (on) {
+        position = 0;
+        flashReset();
+      }
+      render();
+      const seq = ++pressSeq;
+      post({ press: on })
+        .then(() => {
+          if (seq !== pressSeq) return;
+          if (holding) {
+            pressed = true;
+            position = 0;
+            render();
+          }
+        })
+        .catch(() => setLive(false));
+    }
+
+    function releasePress() {
+      if (!holding) return;
+      holding = false;
+      press(false);
+    }
+
+    hub.addEventListener("pointerdown", (e) => {
+      if (seqBusy) return;
+      e.preventDefault();
+      e.stopPropagation();
+      try { hub.setPointerCapture(e.pointerId); } catch (_) {}
+      holding = true;
+      press(true);
+    });
+    hub.addEventListener("pointerup", releasePress);
+    hub.addEventListener("pointercancel", releasePress);
+    hub.addEventListener("lostpointercapture", releasePress);
+
+    async function poll() {
+      try {
+        const res = await fetch("/api/state");
+        const data = await res.json();
+        if (Date.now() >= ignoreServerUntil) applyServer(data);
+        if (data.busy) {
+          seqBusy = true;
+          sendCodeBtn.disabled = true;
+          leds.querySelectorAll(".led").forEach((el) => { el.disabled = true; });
+          runStatus.textContent = data.status || "busy";
+          runStatus.classList.add("busy");
+        } else if (seqBusy && !data.busy && (data.status === "done" || data.status === "idle" || data.status === "error")) {
+          setSeqBusy(false, data.status);
+        }
+        setLive(data.connected !== false);
+      } catch (_) {
+        setLive(false);
+      }
+    }
+
+    render();
+    poll();
+    setInterval(poll, 80);
+  </script>
+</body>
+</html>

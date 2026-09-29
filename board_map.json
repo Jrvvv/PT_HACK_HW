@@ -1,0 +1,19 @@
+{
+  "board_layout": {
+    "sides": {"left": 8, "right": 8, "bottom": 5},
+    "note": "Custom breakout around Pico — not full 40-pin silk"
+  },
+  "code_progress_leds": [
+    {"digit_index": 1, "gpio": 13, "esp_gpio": 22, "note": "1st LED — first code digit"},
+    {"digit_index": 2, "gpio": 12, "esp_gpio": 5, "note": "2nd LED"},
+    {"digit_index": 3, "gpio": 11, "esp_gpio": 18, "note": "3rd LED"},
+    {"digit_index": 4, "gpio": 10, "esp_gpio": 17, "note": "4th LED — blinks until 4th digit pressed"}
+  ],
+  "wiring": {
+    "board_gp10": "esp_gpio17",
+    "board_gp11": "esp_gpio18",
+    "board_gp12": "esp_gpio5",
+    "board_gp13": "esp_gpio22"
+  },
+  "source": "user wired 2026-09-27"
+}

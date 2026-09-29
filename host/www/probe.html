@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>HALK · Pico Probe</title>
+  <style>
+    :root {
+      --bg0: #0b1020;
+      --bg1: #121a2e;
+      --ink: #e8eefc;
+      --muted: #8b97b3;
+      --accent: #5ce1ff;
+      --hi: #b8ff3c;
+      --lo: #ff5a36;
+      --led: #ffb020;
+      --panel: rgba(18, 28, 48, 0.82);
+      --display: "Gill Sans", "Trebuchet MS", "Century Gothic", sans-serif;
+      --mono: "Cascadia Mono", "Consolas", "Menlo", monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      min-height: 100%;
+      color: var(--ink);
+      font-family: var(--mono);
+      background:
+        radial-gradient(900px 500px at 10% 0%, #1a2a4a 0%, transparent 55%),
+        radial-gradient(700px 400px at 100% 30%, #2a1520 0%, transparent 50%),
+        linear-gradient(165deg, var(--bg0), var(--bg1));
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 18px 40px;
+      display: grid;
+      gap: 18px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: end;
+    }
+    header h1 {
+      font-family: var(--display);
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    header p { color: var(--muted); font-size: 0.78rem; margin-top: 6px; }
+    a.back {
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid rgba(92, 225, 255, 0.35);
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 16px;
+    }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(92, 225, 255, 0.16);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .live {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .level {
+      font-family: var(--display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      min-width: 4.5ch;
+    }
+    .level.high { color: var(--hi); text-shadow: 0 0 24px rgba(184,255,60,.35); }
+    .level.low { color: var(--lo); text-shadow: 0 0 24px rgba(255,90,54,.35); }
+    .meta { color: var(--muted); font-size: 0.78rem; line-height: 1.5; }
+    .meta strong { color: var(--ink); }
+
+    .board-wrap {
+      display: grid;
+      grid-template-columns: 56px 1fr 56px;
+      grid-template-rows: 1fr 52px;
+      gap: 8px;
+      width: min(420px, 100%);
+      margin: 10px auto 0;
+      min-height: 340px;
+    }
+    .side {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 4px;
+    }
+    .side.bottom {
+      grid-column: 2;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    .pcb {
+      grid-column: 2;
+      grid-row: 1;
+      background: linear-gradient(180deg, #1c8f5a 0%, #0f5a3a 100%);
+      border-radius: 16px;
+      border: 2px solid rgba(255,255,255,0.12);
+      position: relative;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.25), 0 18px 36px rgba(0,0,0,0.35);
+      display: grid;
+      place-items: center;
+    }
+    .pcb .chip {
+      width: 38%;
+      aspect-ratio: 1.1;
+      background: #111;
+      border-radius: 8px;
+      border: 1px solid #333;
+      color: #888;
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 6px;
+    }
+    .pin {
+      border: none;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.58rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 0;
+      width: 100%;
+    }
+    .side.right .pin { flex-direction: row-reverse; }
+    .side.bottom .pin { flex-direction: column; width: auto; }
+    .pad {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      background: #d7dde8;
+      border: 1px solid #333;
+      flex: 0 0 auto;
+      transition: background 100ms ease, box-shadow 100ms ease, transform 100ms ease;
+    }
+    .pin:hover .pad { transform: scale(1.12); }
+    .pin.active .pad {
+      background: var(--accent);
+      box-shadow: 0 0 14px rgba(92, 225, 255, 0.7);
+    }
+    .pin.led .pad { background: var(--led); }
+    .pin.led.active .pad {
+      background: #ffe08a;
+      box-shadow: 0 0 16px rgba(255, 176, 32, 0.7);
+    }
+    .pin .lbl { line-height: 1.15; color: #cfe8ff; }
+    .pin.led .lbl { color: #ffd36a; }
+
+    .quick {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .quick button {
+      border: 1px solid rgba(255, 176, 32, 0.45);
+      background: rgba(255, 176, 32, 0.08);
+      color: #ffd36a;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font: inherit;
+      font-size: 0.68rem;
+      cursor: pointer;
+    }
+    .map {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(92,225,255,0.12);
+    }
+    .map h3 {
+      font-family: var(--display);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .map-row {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      gap: 8px;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+    .map-row b { color: #ffd36a; }
+    .led-bank {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .led-cell {
+      text-align: center;
+      padding: 12px 8px;
+      border: 1px solid rgba(255,176,32,0.22);
+      background: rgba(0,0,0,0.28);
+    }
+    .led-dot {
+      width: 28px;
+      height: 28px;
+      margin: 0 auto 8px;
+      border-radius: 50%;
+      background: #2a2418;
+      border: 2px solid #665530;
+      transition: background 80ms ease, box-shadow 80ms ease, border-color 80ms ease;
+    }
+    .led-cell.on .led-dot {
+      background: #ffb020;
+      border-color: #ffe08a;
+      box-shadow: 0 0 18px rgba(255, 176, 32, 0.85);
+    }
+    .led-cell .t { font-size: 0.72rem; color: #ffd36a; letter-spacing: 0.06em; }
+    .led-cell .s { font-size: 0.58rem; color: var(--muted); margin-top: 4px; }
+    .tools { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+    .btn {
+      border: 1px solid rgba(92,225,255,0.35);
+      background: transparent;
+      color: var(--accent);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font: inherit;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .term {
+      height: min(70vh, 640px);
+      overflow: auto;
+      background: #070b14;
+      border-radius: 12px;
+      border: 1px solid rgba(92,225,255,0.12);
+      padding: 12px;
+      font-size: 0.72rem;
+      line-height: 1.45;
+    }
+    .term .line { white-space: pre-wrap; word-break: break-word; }
+    .term .focus { color: var(--accent); }
+    .term .edge-hi { color: var(--hi); }
+    .term .edge-lo { color: var(--lo); }
+    .term .sample { color: var(--muted); }
+    .hint { color: var(--muted); font-size: 0.75rem; line-height: 1.5; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Pico Probe</h1>
+        <p>LED GP10–13 читаются постоянно с ESP (17/18/5/22). Щуп D16 — для остальных пинов.</p>
+      </div>
+      <a class="back" href="/">← encoder</a>
+      <a class="back" href="/bruteforce.html" style="margin-left:14px">bruteforce →</a>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <div class="live">
+          <div class="level low" id="level">LOW</div>
+          <div class="meta">
+            probe D16: <strong id="probeVal">0</strong><br />
+            focus: <strong id="focusPin">—</strong><br />
+            link: <strong id="link">…</strong>
+          </div>
+        </div>
+
+        <div class="led-bank" id="ledBank">
+          <div class="led-cell" data-i="0"><div class="led-dot"></div><div class="t">GP13</div><div class="s">1 · ESP22</div></div>
+          <div class="led-cell" data-i="1"><div class="led-dot"></div><div class="t">GP12</div><div class="s">2 · ESP5</div></div>
+          <div class="led-cell" data-i="2"><div class="led-dot"></div><div class="t">GP11</div><div class="s">3 · ESP18</div></div>
+          <div class="led-cell" data-i="3"><div class="led-dot"></div><div class="t">GP10</div><div class="s">4 · ESP17</div></div>
+        </div>
+
+        <div class="board-wrap">
+          <div class="side left" id="leftPins"></div>
+          <div class="pcb"><div class="chip">PICO<br />8+8+5</div></div>
+          <div class="side right" id="rightPins"></div>
+          <div class="side bottom" id="bottomPins"></div>
+        </div>
+
+        <div class="quick" id="quickLeds"></div>
+
+        <div class="map">
+          <h3>Код · прогресс LED (GPIO)</h3>
+          <div class="map-row"><b>GP13</b><span>1-й светодиод (первая цифра)</span></div>
+          <div class="map-row"><b>GP12</b><span>2-й светодиод</span></div>
+          <div class="map-row"><b>GP11</b><span>3-й светодиод</span></div>
+          <div class="map-row"><b>GP10</b><span>4-й · моргает, пока не нажали 4-ю</span></div>
+        </div>
+
+        <div class="tools">
+          <button class="btn" id="clearFocus" type="button">Снять focus</button>
+          <button class="btn" id="clearLog" type="button">Очистить лог</button>
+        </div>
+        <p class="hint">
+          Четыре оранжевых индикатора сверху — live с ESP. GP10 моргает до 4-й цифры.
+          Кликни pin / quick и щуп D16 — для маппинга остальных ног.
+        </p>
+      </section>
+
+      <section class="card">
+        <div class="meta" style="margin-bottom:10px">terminal · probe log</div>
+        <div class="term" id="term"></div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    // Known LED GPIOs from your test
+    const LED_MAP = {
+      13: { slot: 1, note: "LED1" },
+      12: { slot: 2, note: "LED2" },
+      11: { slot: 3, note: "LED3" },
+      10: { slot: 4, note: "LED4 blink" },
+    };
+
+    // Board shape only: 8 left, 8 right, 5 bottom.
+    // LED GPIOs placed as dedicated quick targets; side pins are positional until mapped.
+    const LEFT = Array.from({ length: 8 }, (_, i) => ({
+      id: `L${i + 1}`,
+      label: `L${i + 1}`,
+    }));
+    const RIGHT = Array.from({ length: 8 }, (_, i) => ({
+      id: `R${i + 1}`,
+      label: `R${i + 1}`,
+    }));
+    const BOTTOM = Array.from({ length: 5 }, (_, i) => ({
+      id: `B${i + 1}`,
+      label: `B${i + 1}`,
+    }));
+
+    const leftPins = document.getElementById("leftPins");
+    const rightPins = document.getElementById("rightPins");
+    const bottomPins = document.getElementById("bottomPins");
+    const quickLeds = document.getElementById("quickLeds");
+    const level = document.getElementById("level");
+    const probeVal = document.getElementById("probeVal");
+    const focusPin = document.getElementById("focusPin");
+    const link = document.getElementById("link");
+    const term = document.getElementById("term");
+
+    let activeKey = null;
+    let seenLog = new Set();
+
+    function makePinBtn(item, extraClass = "") {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = `pin ${extraClass}`.trim();
+      btn.dataset.key = item.id;
+      btn.dataset.label = item.label;
+      btn.innerHTML = `<span class="pad"></span><span class="lbl">${item.short || item.label}</span>`;
+      btn.addEventListener("click", () => focus(item.label, item.id));
+      return btn;
+    }
+
+    function renderSide(host, rows) {
+      host.innerHTML = "";
+      rows.forEach((row) => host.appendChild(makePinBtn(row)));
+    }
+
+    renderSide(leftPins, LEFT);
+    renderSide(rightPins, RIGHT);
+    renderSide(bottomPins, BOTTOM);
+
+    // Quick LED GPIO targets
+    [13, 12, 11, 10].forEach((gp) => {
+      const info = LED_MAP[gp];
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.dataset.gp = String(gp);
+      btn.textContent = `GP${gp} · ${info.note}`;
+      btn.addEventListener("click", () => {
+        const label = `GP${gp} · ${info.note}`;
+        focus(label, `GP${gp}`);
+      });
+      quickLeds.appendChild(btn);
+    });
+
+    function setActive(key) {
+      activeKey = key;
+      document.querySelectorAll(".pin").forEach((el) => {
+        el.classList.toggle("active", el.dataset.key === key);
+      });
+    }
+
+    async function focus(label, key) {
+      setActive(key);
+      focusPin.textContent = label;
+      await fetch("/api/probe/focus", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pin: label }),
+      });
+    }
+
+    document.getElementById("clearFocus").onclick = async () => {
+      setActive(null);
+      focusPin.textContent = "—";
+      await fetch("/api/probe/focus", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pin: null }),
+      });
+    };
+
+    document.getElementById("clearLog").onclick = async () => {
+      seenLog.clear();
+      term.innerHTML = "";
+      await fetch("/api/probe/clear", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: "{}",
+      });
+    };
+
+    function fmtTime(t) {
+      const d = new Date(t * 1000);
+      return d.toLocaleTimeString("ru-RU", { hour12: false }) + "." + String(d.getMilliseconds()).padStart(3, "0");
+    }
+
+    function addLogLines(entries) {
+      const fresh = [];
+      for (const e of entries) {
+        const id = `${e.t}|${e.kind}|${e.pin}|${e.probe}|${e.level || ""}|${e.note || ""}`;
+        if (seenLog.has(id)) continue;
+        seenLog.add(id);
+        fresh.push(e);
+      }
+      fresh.reverse();
+      for (const e of fresh) {
+        const line = document.createElement("div");
+        line.className = "line";
+        let cls = "sample";
+        let msg = "";
+        if (e.kind === "focus") {
+          cls = "focus";
+          msg = e.note || ("focus " + (e.pin || "—"));
+        } else if (e.kind === "edge") {
+          cls = e.to_v ? "edge-hi" : "edge-lo";
+          msg = `EDGE ${e.from_v}→${e.to_v} (${e.level}) @ ${e.pin || "no-focus"}`;
+        } else if (e.kind === "led_edge" || e.kind === "leds") {
+          cls = "edge-hi";
+          const bits = (e.to_bits || e.bits || e.led_bits || []).join("");
+          msg = e.note ? `LED ${e.note}` : `LED bits=${bits}`;
+        } else {
+          msg = e.note || `sample probe=${e.probe}`;
+        }
+        line.innerHTML = `<span class="${cls}">[${fmtTime(e.t)}] ${msg}</span>`;
+        term.prepend(line);
+      }
+      while (term.children.length > 300) term.removeChild(term.lastChild);
+    }
+
+    function paintLevel(v) {
+      const hi = Number(v) === 1;
+      level.textContent = hi ? "HIGH" : "LOW";
+      level.classList.toggle("high", hi);
+      level.classList.toggle("low", !hi);
+      probeVal.textContent = String(v);
+    }
+
+    function paintLeds(bits) {
+      const arr = bits && bits.length ? bits : [0, 0, 0, 0];
+      document.querySelectorAll("#ledBank .led-cell").forEach((el) => {
+        const i = Number(el.dataset.i);
+        el.classList.toggle("on", Number(arr[i]) === 1);
+      });
+      // also light quick LED buttons
+      document.querySelectorAll("#quickLeds button").forEach((btn) => {
+        const gp = Number(btn.dataset.gp);
+        const idx = { 13: 0, 12: 1, 11: 2, 10: 3 }[gp];
+        if (idx == null) return;
+        btn.style.boxShadow = Number(arr[idx]) === 1
+          ? "0 0 14px rgba(255,176,32,0.8)"
+          : "none";
+        btn.style.background = Number(arr[idx]) === 1
+          ? "rgba(255,176,32,0.35)"
+          : "rgba(255,176,32,0.08)";
+      });
+    }
+
+    async function poll() {
+      try {
+        const res = await fetch("/api/probe/log");
+        const data = await res.json();
+        paintLevel(data.probe);
+        paintLeds(data.led_bits);
+        if (data.probe_pin) focusPin.textContent = data.probe_pin;
+        addLogLines(data.log || []);
+        link.textContent = data.connected === false ? "usb ?" : "live · usb · LEDs+D16";
+      } catch (_) {
+        link.textContent = "usb lost";
+      }
+    }
+
+    poll();
+    setInterval(poll, 60);
+  </script>
+</body>
+</html>

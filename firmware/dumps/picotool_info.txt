@@ -1,0 +1,24 @@
+Program Information
+ name:              usb_token
+ version:           0.1
+ binary start:      0x10000000
+ binary end:        0x100067f0
+
+Fixed Pin Information
+ 25:                LED
+
+Build Information
+ sdk version:       2.2.0
+ pico_board:        pico
+ boot2_name:        boot2_w25q080
+ build date:        Mar 11 2026
+ build attributes:  Release
+
+Device Information
+ type:              RP2040
+ revision:          B2
+ flash size:        2048K
+ flash id:          0x50443405C881691C
+
+Metadata Blocks
+ none

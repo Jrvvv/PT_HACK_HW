@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>HALK · Bruteforce</title>
+  <style>
+    :root {
+      --bg0: #100c0a;
+      --bg1: #1a120e;
+      --ink: #f5ebe0;
+      --muted: #9a8574;
+      --accent: #ffb020;
+      --go: #b8ff3c;
+      --stop: #ff5a36;
+      --panel: rgba(36, 24, 18, 0.78);
+      --display: "Gill Sans", "Trebuchet MS", "Century Gothic", sans-serif;
+      --mono: "Cascadia Mono", "Consolas", "Menlo", monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      min-height: 100%;
+      color: var(--ink);
+      font-family: var(--mono);
+      background:
+        radial-gradient(900px 520px at 12% -5%, #3a2210 0%, transparent 55%),
+        radial-gradient(700px 420px at 100% 20%, #2a1010 0%, transparent 50%),
+        linear-gradient(165deg, var(--bg0), var(--bg1) 60%, #0a0806);
+    }
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 28px 18px 48px;
+      display: grid;
+      gap: 20px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(1.8rem, 6vw, 2.6rem);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-left: 14px;
+    }
+    .nav a:hover { color: var(--accent); }
+    .panel {
+      background: var(--panel);
+      border: 1px solid rgba(255, 176, 32, 0.18);
+      padding: 22px 20px;
+      display: grid;
+      gap: 16px;
+    }
+    .code-big {
+      font-family: var(--display);
+      font-size: clamp(3.2rem, 14vw, 5.5rem);
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-align: center;
+      color: var(--accent);
+      line-height: 1;
+      text-shadow: 0 0 40px rgba(255, 176, 32, 0.35);
+      transition: color 200ms ease;
+    }
+    .code-big.running { color: var(--go); }
+    .code-big.stopped { color: var(--stop); }
+    .bar-wrap {
+      height: 8px;
+      background: rgba(255,255,255,0.06);
+      overflow: hidden;
+    }
+    .bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--go));
+      transition: width 180ms linear;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 18px;
+      font-size: 0.82rem;
+    }
+    .stats dt { color: var(--muted); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; }
+    .stats dd { margin-top: 2px; }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: end;
+    }
+    label {
+      display: grid;
+      gap: 4px;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    input {
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,176,32,0.25);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 1rem;
+      padding: 10px 12px;
+      width: 110px;
+    }
+    input:focus { outline: 1px solid var(--accent); }
+    button {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 12px 22px;
+      border: none;
+      cursor: pointer;
+      transition: transform 120ms ease, filter 120ms ease;
+    }
+    button:active { transform: scale(0.97); }
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-go { background: var(--go); color: #10200a; font-weight: 700; }
+    .btn-stop { background: var(--stop); color: #fff; font-weight: 700; }
+    .eta-box {
+      text-align: center;
+      padding: 12px;
+      border: 1px dashed rgba(255,176,32,0.28);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .eta-box strong { color: var(--ink); font-weight: 600; }
+    .status-line {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+    .status-line.on { color: var(--go); }
+    .status-line.err { color: var(--stop); }
+    .led-bank {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .led-cell {
+      text-align: center;
+      padding: 14px 8px;
+      border: 1px solid rgba(255,176,32,0.22);
+      background: rgba(0,0,0,0.28);
+    }
+    .led-dot {
+      width: 26px;
+      height: 26px;
+      margin: 0 auto 8px;
+      border-radius: 50%;
+      background: #2a1e10;
+      border: 2px solid #665530;
+      transition: background 80ms ease, box-shadow 80ms ease;
+    }
+    .led-cell.on .led-dot {
+      background: #ffb020;
+      border-color: #ffe08a;
+      box-shadow: 0 0 18px rgba(255, 176, 32, 0.85);
+    }
+    .led-cell .t { font-size: 0.72rem; color: #ffd36a; }
+    .led-cell .s { font-size: 0.58rem; color: var(--muted); margin-top: 3px; }
+    .lamp-box {
+      margin-top: 14px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.28);
+    }
+    .lamp-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #2a2a2a;
+      border: 2px solid #666;
+      flex: none;
+    }
+    .lamp-name { font-size: 0.95rem; }
+    .lamp-alert {
+      margin-top: 4px;
+      color: #ff5a5a;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">Brute 0000–9999</div>
+      <nav class="nav">
+        <a href="/">encoder</a>
+        <a href="/probe.html">probe</a>
+        <a href="/map.html">карта</a>
+      </nav>
+    </header>
+
+    <div class="panel">
+      <div id="code" class="code-big">----</div>
+      <div class="bar-wrap"><div id="bar" class="bar"></div></div>
+      <dl class="stats">
+        <div><dt>progress</dt><dd id="progress">0 / 10000</dd></div>
+        <div><dt>rate</dt><dd id="rate">—</dd></div>
+        <div><dt>elapsed</dt><dd id="elapsed">—</dd></div>
+        <div><dt>ETA left</dt><dd id="eta">—</dd></div>
+      </dl>
+      <p id="status" class="status-line">idle</p>
+      <div class="led-bank" id="ledBank">
+        <div class="led-cell" data-i="0"><div class="led-dot"></div><div class="t">GP13</div><div class="s">digit 1</div></div>
+        <div class="led-cell" data-i="1"><div class="led-dot"></div><div class="t">GP12</div><div class="s">digit 2</div></div>
+        <div class="led-cell" data-i="2"><div class="led-dot"></div><div class="t">GP11</div><div class="s">digit 3</div></div>
+        <div class="led-cell" data-i="3"><div class="led-dot"></div><div class="t">GP10</div><div class="s">digit 4</div></div>
+      </div>
+      <div class="lamp-box">
+        <div id="lampDot" class="lamp-dot"></div>
+        <div>
+          <div id="lampColor" class="lamp-name">лампа: —</div>
+          <div id="lampAlert" class="lamp-alert"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="row">
+        <label>delay (s)
+          <input id="delay" type="number" min="0" step="0.001" value="0.001" />
+        </label>
+        <label>from
+          <input id="start" type="number" min="0" max="9999" step="1" value="0" />
+        </label>
+        <label>to
+          <input id="end" type="number" min="0" max="9999" step="1" value="9999" />
+        </label>
+        <button id="go" class="btn-go" type="button">Start</button>
+        <button id="stop" class="btn-stop" type="button" disabled>Stop</button>
+      </div>
+      <div id="preEta" class="eta-box">
+        Оценка полного прогона (0000–9999) при <strong>0.001 с</strong>:
+        ~<strong id="preEtaVal">35 мин</strong>
+        <br /><span style="font-size:0.75rem">(press ~15 ms + поворот; delay почти не влияет ниже ~10 ms)</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const codeEl = $("code");
+    const barEl = $("bar");
+    const progressEl = $("progress");
+    const rateEl = $("rate");
+    const elapsedEl = $("elapsed");
+    const etaEl = $("eta");
+    const statusEl = $("status");
+    const goBtn = $("go");
+    const stopBtn = $("stop");
+    const delayIn = $("delay");
+    const startIn = $("start");
+    const endIn = $("end");
+    const preEtaVal = $("preEtaVal");
+
+    function fmtSec(s) {
+      if (s == null || !isFinite(s) || s < 0) return "—";
+      if (s < 60) return s.toFixed(1) + " с";
+      const m = Math.floor(s / 60);
+      const sec = Math.round(s % 60);
+      if (m < 60) return m + " мин " + sec + " с";
+      const h = Math.floor(m / 60);
+      return h + " ч " + (m % 60) + " мин";
+    }
+
+    function estimateLocal(n, delay) {
+      const press = 0.015;
+      const avgTurn = 4.5 * 0.008;
+      const perDigit = avgTurn + delay + press + delay;
+      return n * 4 * perDigit;
+    }
+
+    function updatePreEta() {
+      const delay = Math.max(0, Number(delayIn.value) || 0);
+      const a = Math.max(0, Math.min(9999, Number(startIn.value) || 0));
+      const b = Math.max(0, Math.min(9999, Number(endIn.value) || 0));
+      const n = Math.max(0, b - a + 1);
+      preEtaVal.textContent = fmtSec(estimateLocal(n, delay));
+      $("preEta").innerHTML =
+        `Оценка <strong>${String(a).padStart(4,"0")}–${String(b).padStart(4,"0")}</strong> ` +
+        `(${n} кодов) при <strong>${delay} с</strong>: ~<strong>${fmtSec(estimateLocal(n, delay))}</strong>` +
+        `<br /><span style="font-size:0.75rem">(press ~15 ms + поворот; delay почти не влияет ниже ~10 ms)</span>`;
+    }
+
+    [delayIn, startIn, endIn].forEach((el) => el.addEventListener("input", updatePreEta));
+    updatePreEta();
+
+    function paint(s) {
+      const total = s.total || 10000;
+      const idx = s.index || 0;
+      const pct = total ? Math.min(100, (idx / total) * 100) : 0;
+      barEl.style.width = pct + "%";
+      progressEl.textContent = `${idx} / ${total}`;
+      codeEl.textContent = s.current != null ? String(s.current).padStart(4, "0") : "----";
+      codeEl.className = "code-big" + (s.running ? " running" : s.stopped ? " stopped" : "");
+      rateEl.textContent = s.rate > 0 ? (s.rate * 60).toFixed(1) + " /мин" : "—";
+      elapsedEl.textContent = fmtSec(s.elapsed_s);
+      etaEl.textContent = s.running ? fmtSec(s.eta_s) : (s.done ? "готово" : "—");
+
+      let msg = "idle";
+      statusEl.className = "status-line";
+      if (s.running) {
+        msg = "RUNNING · " + (s.connected ? "USB ok" : "USB ?");
+        statusEl.className = "status-line on";
+      } else if (s.stopped) {
+        msg = "STOPPED на " + (s.current || "—");
+        statusEl.className = "status-line err";
+      } else if (s.done) {
+        msg = "DONE · " + fmtSec(s.elapsed_s);
+        statusEl.className = "status-line on";
+      } else if (s.last_error) {
+        msg = "ERROR: " + s.last_error;
+        statusEl.className = "status-line err";
+      }
+      statusEl.textContent = msg;
+
+      const bits = s.led_bits || [0, 0, 0, 0];
+      document.querySelectorAll("#ledBank .led-cell").forEach((el) => {
+        const i = Number(el.dataset.i);
+        el.classList.toggle("on", Number(bits[i]) === 1);
+      });
+
+      const lamp = s.lamp || {};
+      const dot = $("lampDot");
+      const lampColor = lamp.color || "—";
+      const rgb = Array.isArray(lamp.rgb) ? lamp.rgb.join(",") : "";
+      $("lampColor").textContent = "лампа: " + lampColor + (rgb ? "  rgb(" + rgb + ")" : "");
+      dot.style.background = lamp.css || "#2a2a2a";
+      dot.style.boxShadow = lamp.color && lamp.color !== "off" ? "0 0 16px " + (lamp.css || "#fff") : "none";
+      const alertEl = $("lampAlert");
+      const saved = lamp.code ? (lamp.code + " → ") : "";
+      if (lamp.alert) {
+        alertEl.textContent = saved + "НЕ КРАСНАЯ: " + lamp.alert + (lamp.check_rgb ? " rgb(" + lamp.check_rgb.join(",") + ")" : "") + (lamp.saved_n ? "  · сохранено " + lamp.saved_n : "");
+      } else if (lamp.check_color === "red") {
+        alertEl.textContent = "проверка: красная" + (lamp.peak ? " (пик)" : "");
+        alertEl.style.color = "#ff8080";
+      } else {
+        alertEl.textContent = "";
+      }
+
+      goBtn.disabled = !!s.running;
+      stopBtn.disabled = !s.running;
+      delayIn.disabled = !!s.running;
+      startIn.disabled = !!s.running;
+      endIn.disabled = !!s.running;
+    }
+
+    async function poll() {
+      try {
+        const r = await fetch("/api/bruteforce/status");
+        const s = await r.json();
+        paint(s);
+      } catch (e) {
+        statusEl.textContent = "нет связи с bridge";
+        statusEl.className = "status-line err";
+      }
+    }
+
+    goBtn.addEventListener("click", async () => {
+      const delay = Number(delayIn.value);
+      const start = Number(startIn.value);
+      const end = Number(endIn.value);
+      goBtn.disabled = true;
+      try {
+        const r = await fetch("/api/bruteforce/start", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ delay, start, end }),
+        });
+        const s = await r.json();
+        if (!r.ok) throw new Error(s.error || r.statusText);
+        paint(s);
+      } catch (e) {
+        statusEl.textContent = "start fail: " + e.message;
+        statusEl.className = "status-line err";
+        goBtn.disabled = false;
+      }
+    });
+
+    stopBtn.addEventListener("click", async () => {
+      stopBtn.disabled = true;
+      try {
+        const r = await fetch("/api/bruteforce/stop", { method: "POST" });
+        paint(await r.json());
+      } catch (e) {
+        statusEl.textContent = "stop fail: " + e.message;
+        statusEl.className = "status-line err";
+      }
+    });
+
+    setInterval(poll, 250);
+    poll();
+  </script>
+</body>
+</html>

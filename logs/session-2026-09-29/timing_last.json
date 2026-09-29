@@ -1,0 +1,1607 @@
+{
+  "observe_s": 0.45,
+  "codes": 20,
+  "events": 805,
+  "rows": [
+    {
+      "code": "0000",
+      "digit_index": 1,
+      "digit": 0,
+      "position_blink": 2,
+      "blink_led": "GP12",
+      "ignite_us": {
+        "GP13": 106675.0,
+        "GP12": 106471.0
+      },
+      "blink_half_us": {
+        "GP13": 299975.0,
+        "GP12": 300004.0
+      },
+      "edges": 8
+    },
+    {
+      "code": "0000",
+      "digit_index": 2,
+      "digit": 0,
+      "position_blink": 3,
+      "blink_led": "GP11",
+      "ignite_us": {
+        "GP13": 256797.0,
+        "GP12": 256527.0,
+        "GP11": 256723.0
+      },
+      "blink_half_us": {
+        "GP13": 299968.0,
+        "GP12": 299988.0,
+        "GP11": 299967.0
+      },
+      "edges": 9
+    },
+    {
+      "code": "0000",
+      "digit_index": 3,
+      "digit": 0,
+      "position_blink": 4,
+      "blink_led": "GP10",
+      "ignite_us": {
+        "GP13": 151691.0,
+        "GP12": 151417.0,
+        "GP11": 151616.0,
+        "GP10": 451587.0
+      },
+      "blink_half_us": {
+        "GP13": 300008.0,
+        "GP12": 299998.0,
+        "GP11": 300008.0,
+        "GP10": 300007.0
+      },
+      "edges": 11
+    },
+    {
+      "code": "0000",
+      "digit_index": 4,
+      "digit": 0,
+      "position_blink": null,
+      "blink_led": null,
+      "ignite_us": {
+        "GP10": 945.0
+      },
+      "blink_half_us": {},
+      "edges": 1
+    },
+    {
+      "code": "1000",
+      "digit_index": 1,
+      "digit": 1,
+      "position_blink": 2,
+      "blink_led": "GP12",
+      "ignite_us": {
+        "GP13": 91046.0,
+        "GP12": 90646.0,
+        "GP11": 90972.0,
+        "GP10": 90897.0
+      },
+      "blink_half_us": {
+        "GP13": 299813.0,
+        "GP12": 299987.0
+      },
+      "edges": 10
+    },
+    {
+      "code": "1000",
+      "digit_index": 2,
+      "digit": 0,
+      "position_blink": 3,
+      "blink_led": "GP11",
+      "ignite_us": {
+        "GP13": 257004.0,
+        "GP12": 256805.0,
+        "GP11": 556982.0
+      },
+      "blink_half_us": {
+        "GP13": 299954.0,
+        "GP12": 299998.0,
+        "GP11": 300000.0
+      },
+      "edges": 8
+    },
+    {
+      "code": "1000",
+      "digit_index": 3,
+      "digit": 0,
+      "position_blink": 4,
+      "blink_led": "GP10",
+      "ignite_us": {
+        "GP13": 151146.0,
+        "GP12": 150599.0,
+        "GP11": 151011.0,
+        "GP10": 150802.0
+      },
+      "blink_half_us": {
+        "GP13": 299972.0,
+        "GP12": 299987.0,
+        "GP11": 299972.0,
+        "GP10": 299960.0
+      },
+      "edges": 12
+    },
+    {
+      "code": "1000",
+      "digit_index": 4,
+      "digit": 0,
+      "position_blink": null,
+      "blink_led": null,
+      "ignite_us": {},
+      "blink_half_us": {},
+      "edges": 0
+    },
+    {
+      "code": "2000",
+      "digit_index": 1,
+      "digit": 2,
+      "position_blink": 2,
+      "blink_led": "GP12",
+      "ignite_us": {
+        "GP13": 83993.0,
+        "GP12": 83277.0,
+        "GP11": 83876.0,
+        "GP10": 83574.0
+      },
+      "blink_half_us": {
+        "GP13": 298974.0,
+        "GP12": 299503.0
+      },
+      "edges": 10
+    },
+    {
+      "code": "2000",
+      "digit_index": 2,
+      "digit": 0,
+      "position_blink": 3,
+      "blink_led": "GP11",
+      "ignite_us": {
+        "GP13": 254171.0,
+        "GP12": 253955.0,
+        "GP11": 554113.0
+      },
+      "blink_half_us": {
+        "GP13": 300004.0,
+        "GP12": 299986.0,
+        "GP11": 300003.0
+      },
+      "edges": 8
+    },
+    {
+      "code": "2000",
+      "digit_index": 3,
+      "digit": 0,
+      "position_blink": 4,
+      "blink_led": "GP10",
+      "ignite_us": {
+        "GP13": 149294.0,
+        "GP12": 148958.0,
+        "GP11": 149219.0,
+        "GP10": 149145.0
+      },
+      "blink_half_us": {
+        "GP13": 299975.0,
+        "GP12": 299988.0,
+        "GP11": 299976.0,
+        "GP10": 299976.0
+      },
+      "edges": 16
+    },
+    {
+      "code": "2000",
+      "digit_index": 4,
+      "digit": 0,
+      "position_blink": null,
+      "blink_led": null,
+      "ignite_us": {
+        "GP10": 859.0
+      },
+      "blink_half_us": {},
+      "edges": 1
+    },
+    {
+      "code": "3000",
+      "digit_index": 1,
+      "digit": 3,
+      "position_blink": 2,
+      "blink_led": "GP12",
+      "ignite_us": {
+        "GP13": 110393.0,
+        "GP12": 110013.0,
+        "GP11": 110318.0,
+        "GP10": 110240.0
+      },
+      "blink_half_us": {
+        "GP13": 299876.0,
+        "GP12": 300013.0
+      },
+      "edges": 8
+    },
+    {
+      "code": "3000",
+      "digit_index": 2,
+      "digit": 0,
+      "position_blink": 3,
+      "blink_led": "GP11",
+      "ignite_us": {
+        "GP13": 5331.0,
+        "GP12": 5010.0,
+        "GP11": 5249.0
+      },
+      "blink_half_us": {
+        "GP13": 299958.0,
+        "GP12": 300013.0,
+        "GP11": 299966.0
+      },
+      "edges": 12
+    },
+    {
+      "code": "3000",
+      "digit_index": 3,
+      "digit": 0,
+      "position_blink": 4,
+      "blink_led": "GP10",
+      "ignite_us": {
+        "GP13": 210367.0,
+        "GP12": 209933.0,
+        "GP11": 210217.0,
+        "GP10": 210142.0
+      },
+      "blink_half_us": {
+        "GP13": 299973.0,
+        "GP12": 299970.0,
+        "GP11": 299973.0,
+        "GP10": 299973.0
+      },
+      "edges": 12
+    },
+    {
+      "code": "3000",
+      "digit_index": 4,
+      "digit": 0,
+      "position_blink": null,
+      "blink_led": null,
+      "ignite_us": {},
+      "blink_half_us": {},
+      "edges": 0
+    },
+    {
+      "code": "4000",
+      "digit_index": 1,
+      "digit": 4,
+      "position_blink": 2,
+      "blink_led": "GP12",
+      "ignite_us": {
+        "GP13": 97125.0,
+        "GP12": 96619.0,
+        "GP11": 97011.0,
+        "GP10": 96891.0
+      },
+      "blink_half_us": {
+        "GP13": 299668.0,
+        "GP12": 299969.0
+      },
+      "edges": 10
+    },
+    {
+      "code": "4000",
+      "digit_index": 2,
+      "digit": 0,
+      "position_blink": 3,
+      "blink_led": "GP11",
+      "ignite_us": {
+        "GP13": 280160.0,
+        "GP12": 279955.0,
+        "GP11": 580134.0
+      },
+      "blink_half_us": {
+        "GP13": 300048.0,
+        "GP12": 299994.0,
+        "GP11": 300007.0
+      },
+      "edges": 8
+    },
+    {
+      "code": "4000",
+      "digit_index": 3,
+      "digit": 0,
+      "position_blink": 4,
+      "blink_led": "GP10",
+      "ignite_us": {
+        "GP13": 178757.0,
+        "GP12": 178243.0,
+        "GP11": 178622.0,
+        "GP10": 178452.0
+      },
+      "blink_half_us": {
+        "GP13": 299987.0,
+        "GP12": 299995.0,
+        "GP11": 299987.0,
+        "GP10": 299968.0
+      },
+      "edges": 12
+    },
+    {
+      "code": "4000",
+      "digit_index": 4,
+      "digit": 0,
+      "position_blink": null,
+      "blink_led": null,
+      "ignite_us": {},
+      "blink_half_us": {},
+      "edges": 0
+    },
+    {
+      "code": "5000",
+      "digit_index": 1,
+      "digit": 5,
+      "position_blink": 2,
+      "blink_led": "GP12",
+      "ignite_us": {
+        "GP13": 141667.0,
+        "GP12": 141311.0,
+        "GP11": 141593.0,
+        "GP10": 141518.0
+      },
+      "blink_half_us": {
+        "GP13": 299851.0,
+        "GP12": 300004.0
+      },
+      "edges": 8
+    },
+    {
+      "code": "5000",
+      "digit_index": 2,
+      "digit": 0,
+      "position_blink": 3,
+      "blink_led": "GP11",
+      "ignite_us": {
+        "GP13": 1646.0,
+        "GP12": 1344.0,
+        "GP11": 1567.0
+      },
+      "blink_half_us": {
+        "GP13": 299958.0,
+        "GP12": 299995.0,
+        "GP11": 299963.0
+      },
+      "edges": 12
+    },
+    {
+      "code": "5000",
+      "digit_index": 3,
+      "digit": 0,
+      "position_blink": 4,
+      "blink_led": "GP10",
+      "ignite_us": {
+        "GP13": 200456.0,
+        "GP12": 200116.0,
+        "GP11": 200382.0,
+        "GP10": 200307.0
+      },
+      "blink_half_us": {
+        "GP13": 299975.0,
+        "GP12": 299987.0,
+        "GP11": 299975.0,
+        "GP10": 299976.0
+      },
+      "edges": 12
+    },
+    {
+      "code": "5000",
+      "digit_index": 4,
+      "digit": 0,
+      "position_blink": null,
+      "blink_led": null,
+      "ignite_us": {},
+      "blink_half_us": {},
+      "edges": 0
+    },
+    {
+      "code": "6000",
+      "digit_index": 1,
+      "digit": 6,
+      "position_blink": 2,
+      "blink_led": "GP12",
+      "ignite_us": {
+        "GP13": 139883.0,
+        "GP12": 139388.0,
+        "GP11": 139748.0,
+        "GP10": 139591.0
+      },
+      "blink_half_us": {
+        "GP13": 299705.0,
+        "GP12": 300007.0
+      },
+      "edges": 8
+    },
+    {
+      "code": "6000",
+      "digit_index": 2,
+      "digit": 0,
+      "position_blink": 3,
+      "blink_led": "GP11",
+      "ignite_us": {
+        "GP13": 5873.0,
+        "GP12": 5501.0,
+        "GP11": 5730.0
+      },
+      "blink_half_us": {
+        "GP13": 299996.0,
+        "GP12": 299997.0,
+        "GP11": 299973.0
+      },
+      "edges": 12
+    },
+    {
+      "code": "6000",
+      "digit_index": 3,
+      "digit": 0,
+      "position_blink": 4,
+      "blink_led": "GP10",
+      "ignite_us": {
+        "GP13": 202358.0,
+        "GP12": 201787.0,
+        "GP11": 202269.0,
+        "GP10": 202134.0
+      },
+      "blink_half_us": {
+        "GP13": 299909.0,
+        "GP12": 299988.0,
+        "GP11": 299863.0,
+        "GP10": 299820.0
+      },
+      "edges": 12
+    },
+    {
+      "code": "6000",
+      "digit_index": 4,
+      "digit": 0,
+      "position_blink": null,
+      "blink_led": null,
+      "ignite_us": {},
+      "blink_half_us": {},
+      "edges": 0
+    },
+    {
+      "code": "7000",
+      "digit_index": 1,
+      "digit": 7,
+      "position_blink": 2,
+      "blink_led": "GP12",
+      "ignite_us": {
+        "GP13": 25504.0,
+        "GP12": 25077.0,
+        "GP11": 25429.0,
+        "GP10": 25355.0
+      },
+      "blink_half_us": {
+        "GP13": 299492.0,
+        "GP12": 299731.0
+      },
+      "edges": 10
+    },
+    {
+      "code": "7000",
+      "digit_index": 2,
+      "digit": 0,
+      "position_blink": 3,
+      "blink_led": "GP11",
+      "ignite_us": {
+        "GP13": 157827.0,
+        "GP12": 157632.0,
+        "GP11": 457798.0
+      },
+      "blink_half_us": {
+        "GP13": 300038.0,
+        "GP12": 299991.0,
+        "GP11": 300036.0
+      },
+      "edges": 8
+    },
+    {
+      "code": "7000",
+      "digit_index": 3,
+      "digit": 0,
+      "position_blink": 4,
+      "blink_led": "GP10",
+      "ignite_us": {
+        "GP13": 53028.0,
+        "GP12": 52660.0,
+        "GP11": 52953.0,
+        "GP10": 52879.0
+      },
+      "blink_half_us": {
+        "GP13": 299973.0,
+        "GP12": 299996.0,
+        "GP11": 299972.0,
+        "GP10": 299972.0
+      },
+      "edges": 16
+    },
+    {
+      "code": "7000",
+      "digit_index": 4,
+      "digit": 0,
+      "position_blink": null,
+      "blink_led": null,
+      "ignite_us": {
+        "GP10": 1049.0
+      },
+      "blink_half_us": {},
+      "edges": 1
+    },
+    {
+      "code": "8000",
+      "digit_index": 1,
+      "digit": 8,
+      "position_blink": 2,
+      "blink_led": "GP12",
+      "ignite_us": {
+        "GP13": 29282.0,
+        "GP12": 28710.0,
+        "GP11": 29196.0,
+        "GP10": 29054.0
+      },
+      "blink_half_us": {
+        "GP13": 299709.0,
+        "GP12": 299991.0
+      },
+      "edges": 10
+    },
+    {
+      "code": "8000",
+      "digit_index": 2,
+      "digit": 0,
+      "position_blink": 3,
+      "blink_led": "GP11",
+      "ignite_us": {
+        "GP13": 222371.0,
+        "GP12": 222158.0,
+        "GP11": 522323.0
+      },
+      "blink_half_us": {
+        "GP13": 300014.0,
+        "GP12": 299985.0,
+        "GP11": 300014.0
+      },
+      "edges": 8
+    },
+    {
+      "code": "8000",
+      "digit_index": 3,
+      "digit": 0,
+      "position_blink": 4,
+      "blink_led": "GP10",
+      "ignite_us": {
+        "GP13": 120937.0,
+        "GP12": 120497.0,
+        "GP11": 120848.0,
+        "GP10": 120705.0
+      },
+      "blink_half_us": {
+        "GP13": 299957.0,
+        "GP12": 299981.0,
+        "GP11": 299945.0,
+        "GP10": 300013.0
+      },
+      "edges": 16
+    },
+    {
+      "code": "8000",
+      "digit_index": 4,
+      "digit": 0,
+      "position_blink": null,
+      "blink_led": null,
+      "ignite_us": {
+        "GP10": 1077.0
+      },
+      "blink_half_us": {},
+      "edges": 1
+    },
+    {
+      "code": "9000",
+      "digit_index": 1,
+      "digit": 9,
+      "position_blink": 2,
+      "blink_led": "GP12",
+      "ignite_us": {
+        "GP13": 38742.0,
+        "GP12": 38286.0,
+        "GP11": 38666.0,
+        "GP10": 38577.0
+      },
+      "blink_half_us": {
+        "GP13": 299731.0,
+        "GP12": 299974.0
+      },
+      "edges": 10
+    },
+    {
+      "code": "9000",
+      "digit_index": 2,
+      "digit": 0,
+      "position_blink": 3,
+      "blink_led": "GP11",
+      "ignite_us": {
+        "GP13": 227769.0,
+        "GP12": 227565.0,
+        "GP11": 527746.0
+      },
+      "blink_half_us": {
+        "GP13": 300003.0,
+        "GP12": 299997.0,
+        "GP11": 300004.0
+      },
+      "edges": 8
+    },
+    {
+      "code": "9000",
+      "digit_index": 3,
+      "digit": 0,
+      "position_blink": 4,
+      "blink_led": "GP10",
+      "ignite_us": {
+        "GP13": 116518.0,
+        "GP12": 115979.0,
+        "GP11": 116429.0,
+        "GP10": 116287.0
+      },
+      "blink_half_us": {
+        "GP13": 299869.0,
+        "GP12": 300001.0,
+        "GP11": 299868.0,
+        "GP10": 299872.0
+      },
+      "edges": 16
+    },
+    {
+      "code": "9000",
+      "digit_index": 4,
+      "digit": 0,
+      "position_blink": null,
+      "blink_led": null,
+      "ignite_us": {
+        "GP10": 1207.0
+      },
+      "blink_half_us": {},
+      "edges": 1
+    },
+    {
+      "code": "0000",
+      "digit_index": 1,
+      "digit": 0,
+      "position_blink": 2,
+      "blink_led": "GP12",
+      "ignite_us": {
+        "GP13": 199847.0,
+        "GP12": 199426.0,
+        "GP11": 199758.0,
+        "GP10": 199619.0
+      },
+      "blink_half_us": {
+        "GP13": 299743.0,
+        "GP12": 299983.0
+      },
+      "edges": 8
+    },
+    {
+      "code": "0000",
+      "digit_index": 2,
+      "digit": 0,
+      "position_blink": 3,
+      "blink_led": "GP11",
+      "ignite_us": {
+        "GP13": 106239.0,
+        "GP12": 105961.0,
+        "GP11": 106160.0
+      },
+      "blink_half_us": {
+        "GP13": 299955.0,
+        "GP12": 300005.0,
+        "GP11": 299978.0
+      },
+      "edges": 9
+    },
+    {
+      "code": "0000",
+      "digit_index": 3,
+      "digit": 0,
+      "position_blink": 4,
+      "blink_led": "GP10",
+      "ignite_us": {
+        "GP13": 3694.0,
+        "GP12": 3373.0,
+        "GP11": 3610.0,
+        "GP10": 303708.0
+      },
+      "blink_half_us": {
+        "GP13": 299888.0,
+        "GP12": 299902.0,
+        "GP11": 299892.0,
+        "GP10": 299846.0
+      },
+      "edges": 15
+    },
+    {
+      "code": "0000",
+      "digit_index": 4,
+      "digit": 0,
+      "position_blink": null,
+      "blink_led": null,
+      "ignite_us": {},
+      "blink_half_us": {},
+      "edges": 0
+    },
+    {
+      "code": "0100",
+      "digit_index": 1,
+      "digit": 0,
+      "position_blink": 2,
+      "blink_led": "GP12",
+      "ignite_us": {
+        "GP13": 186526.0,
+        "GP12": 186084.0,
+        "GP11": 186433.0,
+        "GP10": 186344.0
+      },
+      "blink_half_us": {
+        "GP13": 299831.0,
+        "GP12": 300033.0
+      },
+      "edges": 8
+    },
+    {
+      "code": "0100",
+      "digit_index": 2,
+      "digit": 1,
+      "position_blink": 3,
+      "blink_led": "GP11",
+      "ignite_us": {
+        "GP13": 6278.0,
+        "GP12": 5965.0,
+        "GP11": 6196.0
+      },
+      "blink_half_us": {
+        "GP13": 299980.0,
+        "GP12": 299996.0,
+        "GP11": 299980.0
+      },
+      "edges": 12
+    },
+    {
+      "code": "0100",
+      "digit_index": 3,
+      "digit": 0,
+      "position_blink": 4,
+      "blink_led": "GP10",
+      "ignite_us": {
+        "GP13": 201097.0,
+        "GP12": 200648.0,
+        "GP11": 201001.0,
+        "GP10": 200911.0
+      },
+      "blink_half_us": {
+        "GP13": 299960.0,
+        "GP12": 299987.0,
+        "GP11": 299959.0,
+        "GP10": 299960.0
+      },
+      "edges": 12
+    },
+    {
+      "code": "0100",
+      "digit_index": 4,
+      "digit": 0,
+      "position_blink": null,
+      "blink_led": null,
+      "ignite_us": {},
+      "blink_half_us": {},
+      "edges": 0
+    },
+    {
+      "code": "0200",
+      "digit_index": 1,
+      "digit": 0,
+      "position_blink": 2,
+      "blink_led": "GP12",
+      "ignite_us": {
+        "GP13": 187132.0,
+        "GP12": 186592.0,
+        "GP11": 187043.0,
+        "GP10": 186908.0
+      },
+      "blink_half_us": {
+        "GP13": 299621.0,
+        "GP12": 299982.0
+      },
+      "edges": 8
+    },
+    {
+      "code": "0200",
+      "digit_index": 2,
+      "digit": 2,
+      "position_blink": 3,
+      "blink_led": "GP11",
+      "ignite_us": {
+        "GP13": 8547.0,
+        "GP12": 8206.0,
+        "GP11": 8465.0
+      },
+      "blink_half_us": {
+        "GP13": 299935.0,
+        "GP12": 299988.0,
+        "GP11": 299948.0
+      },
+      "edges": 12
+    },
+    {
+      "code": "0200",
+      "digit_index": 3,
+      "digit": 0,
+      "position_blink": 4,
+      "blink_led": "GP10",
+      "ignite_us": {
+        "GP13": 206149.0,
+        "GP12": 205638.0,
+        "GP11": 206060.0,
+        "GP10": 205925.0
+      },
+      "blink_half_us": {
+        "GP13": 299971.0,
+        "GP12": 299988.0,
+        "GP11": 299971.0,
+        "GP10": 299971.0
+      },
+      "edges": 12
+    },
+    {
+      "code": "0200",
+      "digit_index": 4,
+      "digit": 0,
+      "position_blink": null,
+      "blink_led": null,
+      "ignite_us": {},
+      "blink_half_us": {},
+      "edges": 0
+    },
+    {
+      "code": "0300",
+      "digit_index": 1,
+      "digit": 0,
+      "position_blink": 2,
+      "blink_led": "GP12",
+      "ignite_us": {
+        "GP13": 130716.0,
+        "GP12": 130368.0,
+        "GP11": 130641.0,
+        "GP10": 130567.0
+      },
+      "blink_half_us": {
+        "GP13": 299814.0,
+        "GP12": 299982.0
+      },
+      "edges": 10
+    },
+    {
+      "code": "0300",
+      "digit_index": 2,
+      "digit": 3,
+      "position_blink": 3,
+      "blink_led": "GP11",
+      "ignite_us": {
+        "GP13": 259143.0,
+        "GP12": 258952.0,
+        "GP11": 559122.0
+      },
+      "blink_half_us": {
+        "GP13": 300007.0,
+        "GP12": 299990.0,
+        "GP11": 300006.0
+      },
+      "edges": 8
+    },
+    {
+      "code": "0300",
+      "digit_index": 3,
+      "digit": 0,
+      "position_blink": 4,
+      "blink_led": "GP10",
+      "ignite_us": {
+        "GP13": 155570.0,
+        "GP12": 155226.0,
+        "GP11": 155496.0,
+        "GP10": 155422.0
+      },
+      "blink_half_us": {
+        "GP13": 299976.0,
+        "GP12": 299996.0,
+        "GP11": 299975.0,
+        "GP10": 299975.0
+      },
+      "edges": 12
+    },
+    {
+      "code": "0300",
+      "digit_index": 4,
+      "digit": 0,
+      "position_blink": null,
+      "blink_led": null,
+      "ignite_us": {},
+      "blink_half_us": {},
+      "edges": 0
+    },
+    {
+      "code": "0400",
+      "digit_index": 1,
+      "digit": 0,
+      "position_blink": 2,
+      "blink_led": "GP12",
+      "ignite_us": {
+        "GP13": 184497.0,
+        "GP12": 184066.0,
+        "GP11": 184346.0,
+        "GP10": 184271.0
+      },
+      "blink_half_us": {
+        "GP13": 299784.0,
+        "GP12": 300022.0
+      },
+      "edges": 8
+    },
+    {
+      "code": "0400",
+      "digit_index": 2,
+      "digit": 4,
+      "position_blink": 3,
+      "blink_led": "GP11",
+      "ignite_us": {
+        "GP13": 2841.0,
+        "GP12": 2518.0,
+        "GP11": 2757.0
+      },
+      "blink_half_us": {
+        "GP13": 299983.0,
+        "GP12": 299983.0,
+        "GP11": 299986.0
+      },
+      "edges": 12
+    },
+    {
+      "code": "0400",
+      "digit_index": 3,
+      "digit": 0,
+      "position_blink": 4,
+      "blink_led": "GP10",
+      "ignite_us": {
+        "GP13": 200407.0,
+        "GP12": 199964.0,
+        "GP11": 200310.0,
+        "GP10": 200221.0
+      },
+      "blink_half_us": {
+        "GP13": 299920.0,
+        "GP12": 299942.0,
+        "GP11": 299919.0,
+        "GP10": 299974.0
+      },
+      "edges": 12
+    },
+    {
+      "code": "0400",
+      "digit_index": 4,
+      "digit": 0,
+      "position_blink": null,
+      "blink_led": null,
+      "ignite_us": {},
+      "blink_half_us": {},
+      "edges": 0
+    },
+    {
+      "code": "0500",
+      "digit_index": 1,
+      "digit": 0,
+      "position_blink": 2,
+      "blink_led": "GP12",
+      "ignite_us": {
+        "GP13": 188589.0,
+        "GP12": 188245.0,
+        "GP11": 188514.0,
+        "GP10": 188440.0
+      },
+      "blink_half_us": {
+        "GP13": 299372.0,
+        "GP12": 299734.0
+      },
+      "edges": 10
+    },
+    {
+      "code": "0500",
+      "digit_index": 2,
+      "digit": 5,
+      "position_blink": 3,
+      "blink_led": "GP11",
+      "ignite_us": {
+        "GP13": 282194.0,
+        "GP12": 282003.0,
+        "GP11": 582177.0
+      },
+      "blink_half_us": {
+        "GP13": 300000.0,
+        "GP12": 299998.0,
+        "GP11": 299999.0
+      },
+      "edges": 8
+    },
+    {
+      "code": "0500",
+      "digit_index": 3,
+      "digit": 0,
+      "position_blink": 4,
+      "blink_led": "GP10",
+      "ignite_us": {
+        "GP13": 203095.0,
+        "GP12": 202747.0,
+        "GP11": 203021.0,
+        "GP10": 202946.0
+      },
+      "blink_half_us": {
+        "GP13": 299960.0,
+        "GP12": 299988.0,
+        "GP11": 299959.0,
+        "GP10": 299960.0
+      },
+      "edges": 12
+    },
+    {
+      "code": "0500",
+      "digit_index": 4,
+      "digit": 0,
+      "position_blink": null,
+      "blink_led": null,
+      "ignite_us": {},
+      "blink_half_us": {},
+      "edges": 0
+    },
+    {
+      "code": "0600",
+      "digit_index": 1,
+      "digit": 0,
+      "position_blink": 2,
+      "blink_led": "GP12",
+      "ignite_us": {
+        "GP13": 140854.0,
+        "GP12": 140327.0,
+        "GP11": 140780.0,
+        "GP10": 140655.0
+      },
+      "blink_half_us": {
+        "GP13": 299665.0,
+        "GP12": 299988.0
+      },
+      "edges": 10
+    },
+    {
+      "code": "0600",
+      "digit_index": 2,
+      "digit": 6,
+      "position_blink": 3,
+      "blink_led": "GP11",
+      "ignite_us": {
+        "GP13": 255157.0,
+        "GP12": 254837.0,
+        "GP11": 555114.0
+      },
+      "blink_half_us": {
+        "GP13": 300000.0,
+        "GP12": 300004.0,
+        "GP11": 299999.0
+      },
+      "edges": 8
+    },
+    {
+      "code": "0600",
+      "digit_index": 3,
+      "digit": 0,
+      "position_blink": 4,
+      "blink_led": "GP10",
+      "ignite_us": {
+        "GP13": 147486.0,
+        "GP12": 147123.0,
+        "GP11": 147412.0,
+        "GP10": 147338.0
+      },
+      "blink_half_us": {
+        "GP13": 299979.0,
+        "GP12": 299983.0,
+        "GP11": 299979.0,
+        "GP10": 299980.0
+      },
+      "edges": 16
+    },
+    {
+      "code": "0600",
+      "digit_index": 4,
+      "digit": 0,
+      "position_blink": null,
+      "blink_led": null,
+      "ignite_us": {
+        "GP10": 913.0
+      },
+      "blink_half_us": {},
+      "edges": 1
+    },
+    {
+      "code": "0700",
+      "digit_index": 1,
+      "digit": 0,
+      "position_blink": 2,
+      "blink_led": "GP12",
+      "ignite_us": {
+        "GP13": 157436.0,
+        "GP12": 156889.0,
+        "GP11": 157297.0,
+        "GP10": 157092.0
+      },
+      "blink_half_us": {
+        "GP13": 299610.0,
+        "GP12": 299981.0
+      },
+      "edges": 10
+    },
+    {
+      "code": "0700",
+      "digit_index": 2,
+      "digit": 7,
+      "position_blink": 3,
+      "blink_led": "GP11",
+      "ignite_us": {
+        "GP13": 255904.0,
+        "GP12": 255586.0,
+        "GP11": 555883.0
+      },
+      "blink_half_us": {
+        "GP13": 299816.0,
+        "GP12": 299991.0,
+        "GP11": 299881.0
+      },
+      "edges": 8
+    },
+    {
+      "code": "0700",
+      "digit_index": 3,
+      "digit": 0,
+      "position_blink": 4,
+      "blink_led": "GP10",
+      "ignite_us": {
+        "GP13": 153670.0,
+        "GP12": 153109.0,
+        "GP11": 153581.0,
+        "GP10": 153446.0
+      },
+      "blink_half_us": {
+        "GP13": 299938.0,
+        "GP12": 299988.0,
+        "GP11": 299937.0,
+        "GP10": 299938.0
+      },
+      "edges": 12
+    },
+    {
+      "code": "0700",
+      "digit_index": 4,
+      "digit": 0,
+      "position_blink": null,
+      "blink_led": null,
+      "ignite_us": {},
+      "blink_half_us": {},
+      "edges": 0
+    },
+    {
+      "code": "0800",
+      "digit_index": 1,
+      "digit": 0,
+      "position_blink": 2,
+      "blink_led": "GP12",
+      "ignite_us": {
+        "GP13": 189422.0,
+        "GP12": 189078.0,
+        "GP11": 189348.0,
+        "GP10": 189274.0
+      },
+      "blink_half_us": {
+        "GP13": 299847.0,
+        "GP12": 299995.0
+      },
+      "edges": 10
+    },
+    {
+      "code": "0800",
+      "digit_index": 2,
+      "digit": 8,
+      "position_blink": 3,
+      "blink_led": "GP11",
+      "ignite_us": {
+        "GP13": 257937.0,
+        "GP12": 257734.0,
+        "GP11": 557899.0
+      },
+      "blink_half_us": {
+        "GP13": 300016.0,
+        "GP12": 299990.0,
+        "GP11": 300015.0
+      },
+      "edges": 8
+    },
+    {
+      "code": "0800",
+      "digit_index": 3,
+      "digit": 0,
+      "position_blink": 4,
+      "blink_led": "GP10",
+      "ignite_us": {
+        "GP13": 153101.0,
+        "GP12": 152753.0,
+        "GP11": 153026.0,
+        "GP10": 152952.0
+      },
+      "blink_half_us": {
+        "GP13": 299974.0,
+        "GP12": 299994.0,
+        "GP11": 299975.0,
+        "GP10": 299975.0
+      },
+      "edges": 12
+    },
+    {
+      "code": "0800",
+      "digit_index": 4,
+      "digit": 0,
+      "position_blink": null,
+      "blink_led": null,
+      "ignite_us": {},
+      "blink_half_us": {},
+      "edges": 0
+    },
+    {
+      "code": "0900",
+      "digit_index": 1,
+      "digit": 0,
+      "position_blink": 2,
+      "blink_led": "GP12",
+      "ignite_us": {
+        "GP13": 185097.0,
+        "GP12": 184537.0,
+        "GP11": 184964.0,
+        "GP10": 184764.0
+      },
+      "blink_half_us": {
+        "GP13": 299630.0,
+        "GP12": 299764.0
+      },
+      "edges": 10
+    },
+    {
+      "code": "0900",
+      "digit_index": 2,
+      "digit": 9,
+      "position_blink": 3,
+      "blink_led": "GP11",
+      "ignite_us": {
+        "GP13": 255057.0,
+        "GP12": 254833.0,
+        "GP11": 555037.0
+      },
+      "blink_half_us": {
+        "GP13": 300055.0,
+        "GP12": 300006.0,
+        "GP11": 300059.0
+      },
+      "edges": 8
+    },
+    {
+      "code": "0900",
+      "digit_index": 3,
+      "digit": 0,
+      "position_blink": 4,
+      "blink_led": "GP10",
+      "ignite_us": {
+        "GP13": 147813.0,
+        "GP12": 147449.0,
+        "GP11": 147738.0,
+        "GP10": 147664.0
+      },
+      "blink_half_us": {
+        "GP13": 299971.0,
+        "GP12": 299991.0,
+        "GP11": 299971.0,
+        "GP10": 299971.0
+      },
+      "edges": 16
+    },
+    {
+      "code": "0900",
+      "digit_index": 4,
+      "digit": 0,
+      "position_blink": null,
+      "blink_led": null,
+      "ignite_us": {
+        "GP10": 845.0
+      },
+      "blink_half_us": {},
+      "edges": 1
+    }
+  ],
+  "position_after_each_digit": {
+    "0000": [
+      2,
+      3,
+      4,
+      null,
+      2,
+      3,
+      4,
+      null
+    ],
+    "1000": [
+      2,
+      3,
+      4,
+      null
+    ],
+    "2000": [
+      2,
+      3,
+      4,
+      null
+    ],
+    "3000": [
+      2,
+      3,
+      4,
+      null
+    ],
+    "4000": [
+      2,
+      3,
+      4,
+      null
+    ],
+    "5000": [
+      2,
+      3,
+      4,
+      null
+    ],
+    "6000": [
+      2,
+      3,
+      4,
+      null
+    ],
+    "7000": [
+      2,
+      3,
+      4,
+      null
+    ],
+    "8000": [
+      2,
+      3,
+      4,
+      null
+    ],
+    "9000": [
+      2,
+      3,
+      4,
+      null
+    ],
+    "0100": [
+      2,
+      3,
+      4,
+      null
+    ],
+    "0200": [
+      2,
+      3,
+      4,
+      null
+    ],
+    "0300": [
+      2,
+      3,
+      4,
+      null
+    ],
+    "0400": [
+      2,
+      3,
+      4,
+      null
+    ],
+    "0500": [
+      2,
+      3,
+      4,
+      null
+    ],
+    "0600": [
+      2,
+      3,
+      4,
+      null
+    ],
+    "0700": [
+      2,
+      3,
+      4,
+      null
+    ],
+    "0800": [
+      2,
+      3,
+      4,
+      null
+    ],
+    "0900": [
+      2,
+      3,
+      4,
+      null
+    ]
+  },
+  "ignite_by_entered_digit": {
+    "digit1": {
+      "GP13": {
+        "n": 20,
+        "mean_us": 130721.3,
+        "stdev_us": 54971.1,
+        "min_us": 25504.0,
+        "p50_us": 140368.5,
+        "max_us": 199847.0
+      },
+      "GP12": {
+        "n": 20,
+        "mean_us": 130270.5,
+        "stdev_us": 54987.1,
+        "min_us": 25077.0,
+        "p50_us": 139857.5,
+        "max_us": 199426.0
+      },
+      "GP11": {
+        "n": 19,
+        "mean_us": 131891.2,
+        "stdev_us": 56107.6,
+        "min_us": 25429.0,
+        "p50_us": 140780.0,
+        "max_us": 199758.0
+      },
+      "GP10": {
+        "n": 19,
+        "mean_us": 131770.1,
+        "stdev_us": 56108.9,
+        "min_us": 25355.0,
+        "p50_us": 140655.0,
+        "max_us": 199619.0
+      }
+    },
+    "digit2": {
+      "GP13": {
+        "n": 20,
+        "mean_us": 167912.3,
+        "stdev_us": 113550.3,
+        "min_us": 1646.0,
+        "p50_us": 240970.0,
+        "max_us": 282194.0
+      },
+      "GP12": {
+        "n": 20,
+        "mean_us": 167652.4,
+        "stdev_us": 113594.3,
+        "min_us": 1344.0,
+        "p50_us": 240760.0,
+        "max_us": 282003.0
+      },
+      "GP11": {
+        "n": 20,
+        "mean_us": 347858.8,
+        "stdev_us": 250998.7,
+        "min_us": 1567.0,
+        "p50_us": 525034.5,
+        "max_us": 582177.0
+      },
+      "GP10": {
+        "n": 0
+      }
+    },
+    "digit3": {
+      "GP13": {
+        "n": 20,
+        "mean_us": 155331.7,
+        "stdev_us": 51554.8,
+        "min_us": 3694.0,
+        "p50_us": 153385.5,
+        "max_us": 210367.0
+      },
+      "GP12": {
+        "n": 20,
+        "mean_us": 154911.0,
+        "stdev_us": 51529.3,
+        "min_us": 3373.0,
+        "p50_us": 152931.0,
+        "max_us": 209933.0
+      },
+      "GP11": {
+        "n": 20,
+        "mean_us": 155241.0,
+        "stdev_us": 51548.9,
+        "min_us": 3610.0,
+        "p50_us": 153303.5,
+        "max_us": 210217.0
+      },
+      "GP10": {
+        "n": 20,
+        "mean_us": 185148.6,
+        "stdev_us": 78129.3,
+        "min_us": 52879.0,
+        "p50_us": 166937.0,
+        "max_us": 451587.0
+      }
+    },
+    "digit4": {
+      "GP13": {
+        "n": 0
+      },
+      "GP12": {
+        "n": 0
+      },
+      "GP11": {
+        "n": 0
+      },
+      "GP10": {
+        "n": 7,
+        "mean_us": 985.0,
+        "stdev_us": 122.0,
+        "min_us": 845.0,
+        "p50_us": 945.0,
+        "max_us": 1207.0
+      }
+    }
+  },
+  "ignite_of_blinking_led": {
+    "GP13": {
+      "n": 0
+    },
+    "GP12": {
+      "n": 20,
+      "mean_us": 130270.5,
+      "stdev_us": 54987.1,
+      "min_us": 25077.0,
+      "p50_us": 139857.5,
+      "max_us": 199426.0
+    },
+    "GP11": {
+      "n": 20,
+      "mean_us": 347858.8,
+      "stdev_us": 250998.7,
+      "min_us": 1567.0,
+      "p50_us": 525034.5,
+      "max_us": 582177.0
+    },
+    "GP10": {
+      "n": 20,
+      "mean_us": 185148.6,
+      "stdev_us": 78129.3,
+      "min_us": 52879.0,
+      "p50_us": 166937.0,
+      "max_us": 451587.0
+    }
+  },
+  "wall_s": 83.14
+}

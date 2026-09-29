@@ -1,0 +1,61 @@
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=0 busy=True
+code 3736 fwd finish open                leds=[0, 0, 0, 0] dig=1 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=2 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=3 busy=True
+code 3736 fwd finish open                leds=[0, 0, 0, 0] dig=3 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=0 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=1 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=2 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=3 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=4 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=5 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=6 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=7 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=7 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=7 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=0 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=1 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=2 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=3 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=3 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=0 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=1 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=2 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=3 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=4 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=5 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=6 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=6 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=0 busy=True
+code 3736 fwd finish open                leds=[0, 0, 0, 0] dig=0 busy=True
+code 3736 fwd finish open                leds=[1, 0, 0, 0] dig=0 busy=True
+garbage unstick                          leds=[0, 0, 0, 0] dig=0 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=0 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=1 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=2 busy=True
+garbage unstick                          leds=[0, 0, 0, 0] dig=3 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=3 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=0 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=1 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=2 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=3 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=4 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=5 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=6 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=7 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=7 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=0 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=1 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=2 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=3 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=3 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=3 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=0 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=1 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=2 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=3 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=4 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=5 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=6 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=6 busy=True
+garbage unstick                          leds=[1, 0, 0, 0] dig=0 busy=True

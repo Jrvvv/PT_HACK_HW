@@ -1,0 +1,140 @@
+{
+  "per_digit": {
+    "0": {
+      "n": 0,
+      "residual_mean_us": null,
+      "residual_stdev_us": null,
+      "strange_blinks_mean": 0.0
+    },
+    "1": {
+      "n": 0,
+      "residual_mean_us": null,
+      "residual_stdev_us": null,
+      "strange_blinks_mean": 0.03
+    },
+    "2": {
+      "n": 0,
+      "residual_mean_us": null,
+      "residual_stdev_us": null,
+      "strange_blinks_mean": 0.0
+    },
+    "3": {
+      "n": 0,
+      "residual_mean_us": null,
+      "residual_stdev_us": null,
+      "strange_blinks_mean": 0.0
+    },
+    "4": {
+      "n": 0,
+      "residual_mean_us": null,
+      "residual_stdev_us": null,
+      "strange_blinks_mean": 0.0
+    },
+    "5": {
+      "n": 0,
+      "residual_mean_us": null,
+      "residual_stdev_us": null,
+      "strange_blinks_mean": 0.0
+    },
+    "6": {
+      "n": 0,
+      "residual_mean_us": null,
+      "residual_stdev_us": null,
+      "strange_blinks_mean": 0.0
+    },
+    "7": {
+      "n": 0,
+      "residual_mean_us": null,
+      "residual_stdev_us": null,
+      "strange_blinks_mean": 0.0
+    },
+    "8": {
+      "n": 0,
+      "residual_mean_us": null,
+      "residual_stdev_us": null,
+      "strange_blinks_mean": 0.0
+    },
+    "9": {
+      "n": 0,
+      "residual_mean_us": null,
+      "residual_stdev_us": null,
+      "strange_blinks_mean": 0.0
+    }
+  },
+  "tests": [
+    {
+      "digit": 0,
+      "t": null,
+      "leak": false,
+      "mean_us": null
+    },
+    {
+      "digit": 1,
+      "t": null,
+      "leak": false,
+      "mean_us": null
+    },
+    {
+      "digit": 2,
+      "t": null,
+      "leak": false,
+      "mean_us": null
+    },
+    {
+      "digit": 3,
+      "t": null,
+      "leak": false,
+      "mean_us": null
+    },
+    {
+      "digit": 4,
+      "t": null,
+      "leak": false,
+      "mean_us": null
+    },
+    {
+      "digit": 5,
+      "t": null,
+      "leak": false,
+      "mean_us": null
+    },
+    {
+      "digit": 6,
+      "t": null,
+      "leak": false,
+      "mean_us": null
+    },
+    {
+      "digit": 7,
+      "t": null,
+      "leak": false,
+      "mean_us": null
+    },
+    {
+      "digit": 8,
+      "t": null,
+      "leak": false,
+      "mean_us": null
+    },
+    {
+      "digit": 9,
+      "t": null,
+      "leak": false,
+      "mean_us": null
+    }
+  ],
+  "gap_hist_ms": [],
+  "burst_gap_hist_ms": [
+    {
+      "ms": 300,
+      "n": 6
+    }
+  ],
+  "n_events": 3664,
+  "n_trials": 340,
+  "strange_gap_ms": {
+    "n": 1,
+    "p50": 3.42,
+    "mean": 3.42
+  }
+}

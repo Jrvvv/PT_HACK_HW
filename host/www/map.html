@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>HALK · Карта паролей</title>
+  <style>
+    :root {
+      --bg0: #0c0a08;
+      --bg1: #16100c;
+      --ink: #f2e8dc;
+      --muted: #8f7c6a;
+      --accent: #ffb020;
+      --panel: rgba(28, 18, 12, 0.88);
+      --display: "Gill Sans", "Trebuchet MS", "Century Gothic", sans-serif;
+      --mono: "Cascadia Mono", "Consolas", "Menlo", monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      min-height: 100%;
+      color: var(--ink);
+      font-family: var(--mono);
+      background:
+        radial-gradient(900px 500px at 10% 0%, #3a1c0c 0%, transparent 55%),
+        radial-gradient(700px 420px at 100% 10%, #2a0c0c 0%, transparent 50%),
+        linear-gradient(165deg, var(--bg0), var(--bg1));
+    }
+    .wrap {
+      max-width: min(1100px, 96vw);
+      margin: 0 auto;
+      padding: 22px 14px 40px;
+      display: grid;
+      gap: 14px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-left: 12px;
+    }
+    .nav a:hover { color: var(--accent); }
+    .panel {
+      background: var(--panel);
+      border: 1px solid rgba(255, 176, 32, 0.18);
+      padding: 14px 14px 16px;
+      display: grid;
+      gap: 12px;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .meta strong { color: var(--ink); font-weight: 600; }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+    .swatch {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      vertical-align: -2px;
+      margin-right: 6px;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .map-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      max-height: min(82vh, 980px);
+      margin: 0 auto;
+      background: #080604;
+      border: 1px solid rgba(255,176,32,0.2);
+      overflow: hidden;
+      cursor: crosshair;
+    }
+    canvas {
+      width: 100%;
+      height: 100%;
+      image-rendering: pixelated;
+      display: block;
+    }
+    .tip {
+      position: absolute;
+      pointer-events: none;
+      background: rgba(8,6,4,0.92);
+      border: 1px solid rgba(255,176,32,0.35);
+      color: var(--ink);
+      font-size: 0.78rem;
+      padding: 6px 8px;
+      transform: translate(12px, 12px);
+      display: none;
+      z-index: 2;
+      white-space: nowrap;
+    }
+    .axes {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">Карта 0000–9999</div>
+      <nav class="nav">
+        <a href="/bruteforce.html">brute</a>
+        <a href="/">encoder</a>
+        <a href="/probe.html">probe</a>
+      </nav>
+    </header>
+
+    <div class="panel">
+      <div class="meta">
+        <span>проверено <strong id="done">0</strong> / 10000</span>
+        <span>красный <strong id="nRed">0</strong></span>
+        <span>не красный <strong id="nOther">0</strong></span>
+        <span>сейчас <strong id="cur">----</strong></span>
+        <span>режим <strong id="mode">—</strong></span>
+      </div>
+      <div class="legend">
+        <span><i class="swatch" style="background:#1a1410"></i>не проверен</span>
+        <span><i class="swatch" style="background:#d01818"></i>красный пик</span>
+        <span><i class="swatch" style="background:#b8ff3c"></i>не красный</span>
+        <span><i class="swatch" style="background:#ffe14a"></i>текущий</span>
+        <span><i class="swatch" style="background:#2f7bff"></i>blue/cyan</span>
+      </div>
+      <div class="axes"><span>строка = XX·· (00–99)</span><span>столбец = ··YY (00–99)</span></div>
+      <div class="map-wrap" id="wrap">
+        <canvas id="map" width="100" height="100"></canvas>
+        <div class="tip" id="tip"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const N = 100;
+    const canvas = document.getElementById("map");
+    const ctx = canvas.getContext("2d", { alpha: false });
+    const img = ctx.createImageData(N, N);
+    const tip = document.getElementById("tip");
+    const wrap = document.getElementById("wrap");
+
+    // 0 empty, 1 red, 2 other, 3 blue/cyan, 4 current
+    const state = new Uint8Array(10000);
+    let current = -1;
+    let known = {};
+
+    const COLORS = {
+      0: [26, 20, 16, 255],
+      1: [208, 24, 24, 255],
+      2: [184, 255, 60, 255],
+      3: [47, 123, 255, 255],
+      4: [255, 225, 74, 255],
+    };
+
+    function colorOf(entry) {
+      if (!entry) return 0;
+      const c = String(entry.color || "");
+      if (c === "red") return 1;
+      if (c === "blue" || c === "cyan") return 3;
+      return 2;
+    }
+
+    function paint() {
+      const data = img.data;
+      for (let code = 0; code < 10000; code++) {
+        const row = Math.floor(code / 100);
+        const col = code % 100;
+        let kind = state[code];
+        if (code === current) kind = 4;
+        const rgba = COLORS[kind] || COLORS[0];
+        const i = (row * N + col) * 4;
+        data[i] = rgba[0];
+        data[i + 1] = rgba[1];
+        data[i + 2] = rgba[2];
+        data[i + 3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+    }
+
+    function applyColors(colors) {
+      known = colors || {};
+      state.fill(0);
+      let nRed = 0, nOther = 0, done = 0;
+      for (const [codeStr, entry] of Object.entries(known)) {
+        if (!/^\d{1,4}$/.test(codeStr)) continue;
+        const code = Number(codeStr);
+        if (code < 0 || code > 9999) continue;
+        const kind = colorOf(entry);
+        state[code] = kind;
+        done++;
+        if (kind === 1) nRed++;
+        else nOther++;
+      }
+      document.getElementById("done").textContent = String(done);
+      document.getElementById("nRed").textContent = String(nRed);
+      document.getElementById("nOther").textContent = String(nOther);
+      paint();
+    }
+
+    function codeAt(ev) {
+      const rect = canvas.getBoundingClientRect();
+      const x = (ev.clientX - rect.left) / rect.width;
+      const y = (ev.clientY - rect.top) / rect.height;
+      if (x < 0 || y < 0 || x >= 1 || y >= 1) return null;
+      const col = Math.min(99, Math.max(0, Math.floor(x * 100)));
+      const row = Math.min(99, Math.max(0, Math.floor(y * 100)));
+      return row * 100 + col;
+    }
+
+    wrap.addEventListener("mousemove", (ev) => {
+      const code = codeAt(ev);
+      if (code == null) {
+        tip.style.display = "none";
+        return;
+      }
+      const entry = known[String(code).padStart(4, "0")] || known[String(code)];
+      const label = String(code).padStart(4, "0");
+      const color = entry ? (entry.color + " rgb(" + (entry.rgb || []).join(",") + ")") : "не проверен";
+      tip.style.display = "block";
+      tip.style.left = (ev.clientX - wrap.getBoundingClientRect().left) + "px";
+      tip.style.top = (ev.clientY - wrap.getBoundingClientRect().top) + "px";
+      tip.textContent = label + " · " + color + (code === current ? " · СЕЙЧАС" : "");
+    });
+    wrap.addEventListener("mouseleave", () => { tip.style.display = "none"; });
+
+    async function tick() {
+      try {
+        const [colorsR, statusR] = await Promise.all([
+          fetch("/api/lamp/colors"),
+          fetch("/api/bruteforce/status"),
+        ]);
+        const colorsJ = await colorsR.json();
+        const status = await statusR.json();
+        applyColors(colorsJ.colors || {});
+        const cur = status.current != null ? Number(status.current) : -1;
+        current = Number.isFinite(cur) ? cur : -1;
+        document.getElementById("cur").textContent =
+          current >= 0 ? String(current).padStart(4, "0") : "----";
+        document.getElementById("mode").textContent = status.mode || (status.running ? "range" : "idle");
+        paint();
+      } catch (e) {
+        document.getElementById("mode").textContent = "нет связи";
+      }
+    }
+
+    paint();
+    tick();
+    setInterval(tick, 800);
+  </script>
+</body>
+</html>
